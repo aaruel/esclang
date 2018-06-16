@@ -55,27 +55,14 @@ defmodule Esclang.BF do
             {new_machine(p, b, l), input}
         else
             IO.puts('\n')
-            {new_machine(p, b, l), after_matching_bracket(input) |> IO.inspect}
+            {new_machine(p, b, l), after_matching_bracket(input)}
         end
     end
 
     defp end_loop(%{pointer: p, buffer: b, loop: l}, input) do
         {level, l} = l |> Map.get_and_update!(:level, fn e -> {e, e - 1} end)
-        IO.puts('\n')
-        IO.inspect(l)
-        IO.inspect(input)
-        if level == 1 && input == "<-]>>.>---.+++++++..+++.>>.<-.<.+++.------.--------.>>+.>++." do
-            
-            raise ArgumentError, message: "wtf"
-        end
         input = l |> Map.get(:scripts) |> Map.get(level)
         {new_machine(p, b, l), "[" <> input}
-    end
-
-    defp eee_loop(%{pointer: p, buffer: b, loop: l}, input) do
-        {level, l} = l |> Map.get_and_update!(:level, fn e -> {e, e - 1} end)
-        IO.inspect(level)
-        
     end
 
     defp start(input, machine) do
